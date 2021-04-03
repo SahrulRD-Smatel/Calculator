@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Calculator</title>
+
+    <link href="../Content/reset.css" rel="stylesheet" />
+    <link href="../Scripts/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        input {
+            width: 415px !important;
+            margin-bottom: 4px;
+        }
+
+        .btn {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body class="container-fluid bg-primary">
+    <br />
+    <h1 style="text-align:center">Calculator</h1>
+
+    <main class="container jumbotron col-xl-4 col-xl-offset-4 col-md-6 col-md-offset-3 p-x-3 p-y-3 col-xs-12 bg-secondary">
+
+        <div align="center">
+            <input type="text" class="form-control input-lg" />
+        </div>
+        <br />  
+        <div align="center">
+            <button class="btn btn-lg btn-light btn-num" data-val="7">7</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="8">8</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="9">9</button>
+            <button class="btn btn-lg btn-light btn-act" data-val="/">&divide;</button>
+        </div>
+        <div align="center">
+            <button class="btn btn-lg btn-light btn-num" data-val="4">4</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="5">5</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="6">6</button>
+            <button class="btn btn-lg btn-light btn-act" data-val=" x ">&times;</button>
+        </div>
+        <div align="center">
+            <button class="btn btn-lg btn-light btn-num" data-val="1">1</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="2">2</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="3">3</button>
+            <button class="btn btn-lg btn-light btn-act" data-val=" - ">-</button>
+        </div>
+        <div align="center">
+            <button class="btn btn-lg btn-warning btn-act">CLEAR</button>
+            <button class="btn btn-lg btn-light btn-num" data-val="0">0</button>
+            <button class="btn btn-lg btn-success btn-act">=</button>
+            <button class="btn btn-lg btn-light btn-act" data-val=" + ">+</button>
+        </div>
+    </main>
+
+    <script src="../Scripts/jquery-3.4.1.min.js"></script>
+    <script src="../Scripts/popper.js"></script>
+    <script src="../Scripts/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.btn-light').click(function () {
+
+                if ($('input').hasClass('needClear')) {
+                    if ($(this).hasClass('btn_num')) {
+                        $('input').val('');
+                        $('input').removeClass('needClear');
+                    }
+                    if ($(this).hasClass('btn_act')) {
+                        $('input').removeClass('needClear');
+
+                    }
+                }
+
+                var current_val = $('input').val();
+                var val = $(this).data('val');
+                $('input').val(current_val + val);
+            });
+
+            $('.btn-warning').click(function () {
+                $('input').val('');
+            });
+
+            $('.btn-success').click(function () {
+
+                var val = $('input').val().split(" ");
+                var result = 'ERROR';
+
+                if (val[1] == '/') {
+                    result = parseInt(val[0]) / parseInt(val[2]);
+                }
+
+                if (val[1] == 'x') {
+                    result = parseInt(val[0]) * parseInt(val[2]);
+                }
+
+                if (val[1] == '-') {
+                    result = parseInt(val[0]) - parseInt(val[2]);
+                }
+
+                if (val[1] == '+') {
+                    result = parseInt(val[0]) + parseInt(val[2]);
+                }
+
+                $('input').val(result.toLocaleString());
+                $('input').addClass('needClear');
+            });
+
+        });
+    </script>
+</body>
+</html>
